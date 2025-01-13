@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "package": "io.github.jumperonjava.imaginebook.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "minVersion": "0.8",
+  "client": [
+    "BookEditScreenMixin",
+    "BookScreenMixin",
+    "MinecraftClientMixin",
+  ],
+  "mixins": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

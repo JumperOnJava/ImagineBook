@@ -1,0 +1,11 @@
+accessWidener v2 named
+accessible method net/minecraft/client/gui/screen/Screen remove (Lnet/minecraft/client/gui/Element;)V
+accessible field net/minecraft/client/gui/screen/Screen drawables Ljava/util/List;
+accessible field net/minecraft/client/gui/screen/ingame/BookEditScreen$PageContent lines [Lnet/minecraft/client/gui/screen/ingame/BookEditScreen$Line;
+accessible field net/minecraft/client/gui/screen/ingame/BookEditScreen$Line text Lnet/minecraft/text/Text;
+accessible field net/minecraft/client/gui/screen/ingame/BookEditScreen$Line x I
+accessible field net/minecraft/client/gui/screen/ingame/BookEditScreen$Line y I
+accessible field net/minecraft/client/gui/screen/ingame/BookEditScreen$PageContent selectionRectangles [Lnet/minecraft/client/util/math/Rect2i;
+accessible field net/minecraft/client/gui/screen/ingame/BookEditScreen$PageContent position Lnet/minecraft/client/gui/screen/ingame/BookEditScreen$Position;
+accessible field net/minecraft/client/gui/screen/ingame/BookEditScreen$PageContent atEnd Z
+accessible class net/minecraft/client/gui/screen/ingame/BookEditScreen$Position

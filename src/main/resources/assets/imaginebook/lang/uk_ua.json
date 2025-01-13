@@ -1,0 +1,9 @@
+{
+  "imaginebook.error.too_long": "Посилання більше 255 символів",
+  "imaginebook.gui.add": "Додати зображення",
+  "imaginebook.gui.remove": "Видалити зображення",
+  "imaginebook.error.too_long_encoded": "Помилка: дані занадто довгі на сторінках %s",
+  "imaginebook.gui.used": "Місця залишилось на сторінці: %d",
+  "imaginebook.gui.urlhere": "Вставте посилання сюди"
+
+}

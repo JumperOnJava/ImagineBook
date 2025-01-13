@@ -1,0 +1,9 @@
+{
+  "imaginebook.error.too_long": "Ссылка длиннее 255 символов",
+  "imaginebook.gui.add": "Добавить изображение",
+  "imaginebook.gui.remove": "Удалить изображение",
+  "imaginebook.error.too_long_encoded": "Ошибка: данные слишком длинные на страницах %s",
+  "imaginebook.gui.used": "Места осталось на странице: %d",
+  "imaginebook.gui.urlhere": "Вставьте ссылку сюда"
+
+}

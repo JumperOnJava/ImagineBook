@@ -1,0 +1,8 @@
+{
+  "imaginebook.error.too_long": "Url is longer that 255 symbols",
+  "imaginebook.gui.add": "Add image",
+  "imaginebook.gui.remove": "Remove image",
+  "imaginebook.error.too_long_encoded": "Error: encoded images data is too long on these pages: %s",
+  "imaginebook.gui.used": "Space left on page: %d",
+  "imaginebook.gui.urlhere": "Paste link here"
+}

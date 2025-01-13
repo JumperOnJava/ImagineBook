@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "${id}",
+  "version": "${version}",
+  "name": "${name}",
+  "description": "",
+  "authors": [
+    "JavaJumper"
+  ],
+  "contact": {
+  },
+  "license": "LGPLv3",
+  "icon": "assets/${id}/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "io.github.jumperonjava.imaginebook.fabric.ImaginebookFabric"
+    ],
+    "client": [
+      "io.github.jumperonjava.imaginebook.fabric.client.ImaginebookFabricClient"
+    ]
+  },
+  "mixins": [
+    "imaginebook-common.mixins.json",
+    "imaginebook-fabric.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.15",
+    "minecraft": "${minecraft}"
+  }
+}
