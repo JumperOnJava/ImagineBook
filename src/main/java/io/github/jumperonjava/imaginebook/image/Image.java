@@ -6,7 +6,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.client.gui.screen.pack.PackScreen;
-import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.model.CowEntityModel;
 import net.minecraft.client.texture.MissingSprite;
 import net.minecraft.client.texture.NativeImageBackedTexture;
