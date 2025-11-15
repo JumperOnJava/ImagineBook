@@ -72,7 +72,8 @@ public class ImageData {
         VersionFunctions.rotateZ(context, rotation);
         VersionFunctions.translate2D(context, -w / 2, -h / 2);
 
-        VersionFunctions.scale2D(context, widthFraction, heightFraction);
+        VersionFunctions.translate2D(context, widthFraction < 0 ? w : 0, heightFraction < 0 ? h : 0);
+        VersionFunctions.scale2D(context, Math.abs(widthFraction), Math.abs(heightFraction));
         image.render(context);
 
         VersionFunctions.popMatrix(context);
