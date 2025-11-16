@@ -17,3 +17,6 @@ config = "imaginebook-common.mixins.json"
 
 [[mixins]]
 config = "imaginebook-neoforge.mixins.json"
+
+[[accessTransformers]]
+file="META-INF/accesstransformer.cfg"

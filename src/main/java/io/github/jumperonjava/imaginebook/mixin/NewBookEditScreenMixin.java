@@ -39,14 +39,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 //? if >= 1.21.3
-import net.minecraft.component.type.WritableBookContentComponent;
+/*import net.minecraft.component.type.WritableBookContentComponent;*/
 
 //? if >= 1.21.6 {
-import net.minecraft.client.gui.widget.EditBoxWidget;
+/*import net.minecraft.client.gui.widget.EditBoxWidget;
 import net.minecraft.client.gui.screen.ingame.BookSigningScreen;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.StringVisitable;
-//?}
+*///?}
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,12 +75,12 @@ public abstract class NewBookEditScreenMixin extends Screen {
     private Text pageIndicatorText;
 
     //? if >= 1.21.6 {
-    @Shadow
+    /*@Shadow
     private EditBoxWidget editBox;
-    //?}
+    *///?}
 
     //? if < 1.21.6 {
-    /*@Shadow
+    @Shadow
     private boolean dirty;
     @Shadow
     private boolean signing;
@@ -103,7 +103,7 @@ public abstract class NewBookEditScreenMixin extends Screen {
 
     @Shadow
     protected abstract void invalidatePageContent();
-    *///?}
+    //?}
 
     private TextFieldWidget urlField;
     private TextFieldWidget xPosField;
@@ -131,10 +131,10 @@ public abstract class NewBookEditScreenMixin extends Screen {
 
     @Inject(method = "<init>", at = @At("TAIL"))
         //? if >= 1.21.3 {
-    void construct(PlayerEntity player, ItemStack stack, Hand hand, WritableBookContentComponent writableBookContent, CallbackInfo ci) {
-        //?} else {
-        /*void construct(PlayerEntity player, ItemStack itemStack, Hand hand, CallbackInfo ci) {
-         *///?}
+    /*void construct(PlayerEntity player, ItemStack stack, Hand hand, WritableBookContentComponent writableBookContent, CallbackInfo ci) {
+        *///?} else {
+        void construct(PlayerEntity player, ItemStack itemStack, Hand hand, CallbackInfo ci) {
+         //?}
         for (int i = 0; i < 250; i++) {
             display_pages.add(new ArrayList<>());
         }
@@ -159,13 +159,13 @@ public abstract class NewBookEditScreenMixin extends Screen {
     private void setCurrentPageContent(String content) {
         pages.set(currentPage, content);
         //? if >= 1.21.7 {
-        this.editBox.setText(content, true);
-        //?} else if >= 1.21.6 {
+        /*this.editBox.setText(content, true);
+        *///?} else if >= 1.21.6 {
         /*this.editBox.setText(content);
         *///?} else {
 
 
-        /*this.dirty = true;
+        this.dirty = true;
         var start = currentPageSelectionManager.getSelectionStart();
         var end = currentPageSelectionManager.getSelectionEnd();
         start = MathHelper.clamp(start, 0, pages.size() - 1);
@@ -173,11 +173,11 @@ public abstract class NewBookEditScreenMixin extends Screen {
         currentPageSelectionManager.setSelection(start, end);
 
         invalidatePageContent();
-        *///?}
+        //?}
     }
 
     /*? if <1.21.6 {*/
-    /*@Inject(method = "changePage", at = @At("HEAD"))
+    @Inject(method = "changePage", at = @At("HEAD"))
     void onChangePage(CallbackInfo ci) {
         currentEdited = -1;
     }
@@ -196,7 +196,7 @@ public abstract class NewBookEditScreenMixin extends Screen {
     void updateSafeModeImages(CallbackInfo ci) {
         updateDisplayImages();
     }
-    *//*?}*/
+    /*?}*/
 
     int currentEdited = -1;
 
@@ -423,7 +423,7 @@ public abstract class NewBookEditScreenMixin extends Screen {
         List<Integer> pageErrors = new ArrayList<>();
         if (pageErrors.size() > 0) {
             //? if < 1.21.6
-            /*signing = false;*/
+            signing = false;
             Imaginebook.cancelledFinalize = true;
             error = Text.translatable("imaginebook.error.too_long_encoded", String.join(", ", pageErrors.stream().map(s -> String.valueOf(s + 1)).toArray(String[]::new)));
         } else {
@@ -473,73 +473,73 @@ public abstract class NewBookEditScreenMixin extends Screen {
     }
 
     //? if >= 1.21.9 {
-    @Override
+    /*@Override
     public boolean mouseClicked(net.minecraft.client.gui.Click click, boolean doubled) {
-    //?} else if >= 1.21.6 {
+    *///?} else if >= 1.21.6 {
     /*@Override
     public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
     *///?} else {
-    /*@Inject(method = "mouseClicked", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "mouseClicked", at = @At("HEAD"), cancellable = true)
     void mouseClicked(double mouseX, double mouseY, int mouseButton, CallbackInfoReturnable<Boolean> cir) {
-        *///?}
+        //?}
         var images = display_pages.get(currentPage);
         //? if >= 1.21.6 {
-        boolean inSigningScreen = client.currentScreen instanceof BookSigningScreen;
+        /*boolean inSigningScreen = client.currentScreen instanceof BookSigningScreen;
         if (inSigningScreen)
             return false;
         var buttons = new ButtonWidget[]{nextPageButton, previousPageButton};
-        //?} else {
-        /*if (signing)
+        *///?} else {
+        if (signing)
             return;
         var buttons = new ButtonWidget[]{nextPageButton, previousPageButton, signButton, doneButton};
-        *///?}
+        //?}
         for (var button : buttons) {
             //? if >= 1.21.9 {
-            if (button.isMouseOver(click.x(), click.y())) {
+            /*if (button.isMouseOver(click.x(), click.y())) {
                 button.onPress(click);
-            //?} else {
-            /*if (button.isMouseOver(mouseX, mouseY)) {
+            *///?} else {
+            if (button.isMouseOver(mouseX, mouseY)) {
                 button.onPress();
-            *///?}
+            //?}
                 //? if >= 1.21.6 {
-                return true;
-                //?} else {
-                /*cir.setReturnValue(true);
+                /*return true;
+                *///?} else {
+                cir.setReturnValue(true);
                 return;
-                *///?}
+                //?}
             }
         }
         int i = 0;
         for (var image : images) {
             //? if >= 1.21.9 {
-            if (isMouseOver(image, click.x(), click.y())) {
-            //?} else {
-            /*if (isMouseOver(image, mouseX, mouseY)) {
-            *///?}
+            /*if (isMouseOver(image, click.x(), click.y())) {
+            *///?} else {
+            if (isMouseOver(image, mouseX, mouseY)) {
+            //?}
                 setCurrentEdited(i);
                 draggedByMouse = i;
                 //? if >= 1.21.6 {
-                return true;
-                //?} else {
-                /*cir.setReturnValue(true);
+                /*return true;
+                *///?} else {
+                cir.setReturnValue(true);
                 return;
-                *///?}
+                //?}
             }
             i++;
         }
 
         //Workaround so if you click on book area it unfocuses elements like text fields
         //? if >= 1.21.9 {
-        if (isMouseOver(new ImageData("", (short) 0, (short) 0, (short) 192, (short) 192), click.x(), click.y())) {
-        //?} else {
-        /*if (isMouseOver(new ImageData("", (short) 0, (short) 0, (short) 192, (short) 192), mouseX, mouseY)) {
-        *///?}
+        /*if (isMouseOver(new ImageData("", (short) 0, (short) 0, (short) 192, (short) 192), click.x(), click.y())) {
+        *///?} else {
+        if (isMouseOver(new ImageData("", (short) 0, (short) 0, (short) 192, (short) 192), mouseX, mouseY)) {
+        //?}
             setFocused(null);
         }
 
         //? if >= 1.21.9 {
-        return super.mouseClicked(click, doubled);
-        //?} else if >= 1.21.6 {
+        /*return super.mouseClicked(click, doubled);
+        *///?} else if >= 1.21.6 {
         /*return super.mouseClicked(mouseX, mouseY, mouseButton);
         *///?}
     }
@@ -548,25 +548,25 @@ public abstract class NewBookEditScreenMixin extends Screen {
     public double bufferX, bufferY;
 
     //? if >= 1.21.9 {
-    @Override
+    /*@Override
     public boolean mouseDragged(net.minecraft.client.gui.Click click, double deltaX, double deltaY) {
-    //?} else if >= 1.21.6 {
+    *///?} else if >= 1.21.6 {
     /*@Override
     public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
     *///?} else {
-    /*@Inject(method = "mouseDragged", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "mouseDragged", at = @At("HEAD"), cancellable = true)
     public void mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY, CallbackInfoReturnable<Boolean> cir) {
-    *///?}
+    //?}
         //? if >= 1.21.9 {
-        if (click.button() != 0)
-        //?} else {
-        /*if (button != 0)
-        *///?}
+        /*if (click.button() != 0)
+        *///?} else {
+        if (button != 0)
+        //?}
             //? if >= 1.21.6 {
-            return false;
-        //?} else {
-        /*return;
-         *///?}
+            /*return false;
+        *///?} else {
+        return;
+         //?}
         if (draggedByMouse != -1) {
             bufferX += deltaX;
             bufferY += deltaY;
@@ -578,36 +578,36 @@ public abstract class NewBookEditScreenMixin extends Screen {
             bufferX -= (int) bufferX;
             bufferY -= (int) bufferY;
             //? if >= 1.21.6 {
+            /*updateFields();
+            /^return true;
+             ^/*///?} else {
+            cir.setReturnValue(true);
             updateFields();
-            /*return true;
-             *///?} else {
-            /*cir.setReturnValue(true);
-            updateFields();
-            *///?}
+            //?}
         }
         //? if >= 1.21.9 {
-        return super.mouseDragged(click, deltaX, deltaY);
-        //?} else if >= 1.21.6 {
+        /*return super.mouseDragged(click, deltaX, deltaY);
+        *///?} else if >= 1.21.6 {
         /*return super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
         *///?}
     }
 
     //? if >= 1.21.9 {
-    @Override
-    public boolean mouseReleased(net.minecraft.client.gui.Click click) {
-    //?} else {
     /*@Override
+    public boolean mouseReleased(net.minecraft.client.gui.Click click) {
+    *///?} else {
+    @Override
     public boolean mouseReleased(double mouseX, double mouseY, int button) {
-        *///?}
+        //?}
         if (draggedByMouse != -1) {
             updateFields();
             draggedByMouse = -1;
         }
         //? if >= 1.21.9 {
-        return super.mouseReleased(click);
-        //?} else {
-        /*return super.mouseReleased(mouseX, mouseY, button);
-        *///?}
+        /*return super.mouseReleased(click);
+        *///?} else {
+        return super.mouseReleased(mouseX, mouseY, button);
+        //?}
     }
 
     void mutateImage(int id, Function<ImageData, ImageData> function) {
@@ -641,33 +641,33 @@ public abstract class NewBookEditScreenMixin extends Screen {
 
     @Override
     //? if < 1.20.4 {
-    /*public boolean mouseScrolled(double mouseX, double mouseY, double verticalAmount) {
-     *///?} else {
-    public boolean mouseScrolled(double mouseX, double mouseY, double horizontalAmount, double verticalAmount) {
-        //?}
+    public boolean mouseScrolled(double mouseX, double mouseY, double verticalAmount) {
+     //?} else {
+    /*public boolean mouseScrolled(double mouseX, double mouseY, double horizontalAmount, double verticalAmount) {
+        *///?}
         //? if >= 1.21.6
-        boolean inSigningScreen = client.currentScreen instanceof BookSigningScreen;
-        if (/*? if <1.21.6 {*//*!signing*//*?} else {*/ !inSigningScreen /*?}*/) {
+        /*boolean inSigningScreen = client.currentScreen instanceof BookSigningScreen;*/
+        if (/*? if <1.21.6 {*/!signing/*?} else {*/ /*!inSigningScreen *//*?}*/) {
             verticalAmount = Math.signum(verticalAmount);
             //? if >= 1.21.9 {
-            if (client.isCtrlPressed()) {
-            //?} else {
-            /*if (hasControlDown()) {
-            *///?}
+            /*if (client.isCtrlPressed()) {
+            *///?} else {
+            if (hasControlDown()) {
+            //?}
                 verticalAmount *= 5;
             }
             //? if >= 1.21.9 {
-            if (client.isShiftPressed()) {
-            //?} else {
-            /*if (hasShiftDown()) {
-            *///?}
+            /*if (client.isShiftPressed()) {
+            *///?} else {
+            if (hasShiftDown()) {
+            //?}
                 verticalAmount *= 5;
             }
             //? if >= 1.21.9 {
-            if (client.isAltPressed()) {
-            //?} else {
-            /*if (hasAltDown()) {
-            *///?}
+            /*if (client.isAltPressed()) {
+            *///?} else {
+            if (hasAltDown()) {
+            //?}
                 verticalAmount *= 5;
             }
             boolean pressed = false;
@@ -740,10 +740,10 @@ public abstract class NewBookEditScreenMixin extends Screen {
                     var localVerticalAmount = finalVerticalAmount;
                     if (targetImage != null) {
                         //? if >= 1.21.9 {
-                        if (client.isShiftPressed() || client.isAltPressed()) {
-                        //?} else {
-                        /*if (hasShiftDown() || hasAltDown()) {
-                        *///?}
+                        /*if (client.isShiftPressed() || client.isAltPressed()) {
+                        *///?} else {
+                        if (hasShiftDown() || hasAltDown()) {
+                        //?}
                             localVerticalAmount /= 5;
                         }
                         double pow = Math.pow(1.00 + Math.abs(localVerticalAmount * 0.01), Math.signum(localVerticalAmount));
@@ -754,17 +754,17 @@ public abstract class NewBookEditScreenMixin extends Screen {
                         }
 
                         //? if >= 1.21.9 {
-                        if (!client.isAltPressed()) {
-                        //?} else {
-                        /*if (!hasAltDown()) {
-                        *///?}
+                        /*if (!client.isAltPressed()) {
+                        *///?} else {
+                        if (!hasAltDown()) {
+                        //?}
                             targetImage.widthFraction *= pow;
                         }
                         //? if >= 1.21.9 {
-                        if (!client.isShiftPressed()) {
-                        //?} else {
-                        /*if (!hasShiftDown()) {
-                        *///?}
+                        /*if (!client.isShiftPressed()) {
+                        *///?} else {
+                        if (!hasShiftDown()) {
+                        //?}
                             targetImage.heightFraction *= pow;
                         }
 
@@ -782,10 +782,10 @@ public abstract class NewBookEditScreenMixin extends Screen {
             }
         }
         //? if < 1.20.4 {
-        /*return super.mouseScrolled(mouseX, mouseY, verticalAmount);
-         *///?} else {
-        return super.mouseScrolled(mouseX, mouseY, horizontalAmount, verticalAmount);
-        //?}
+        return super.mouseScrolled(mouseX, mouseY, verticalAmount);
+         //?} else {
+        /*return super.mouseScrolled(mouseX, mouseY, horizontalAmount, verticalAmount);
+        *///?}
     }
 
     @Inject(method = "render", at = @At("TAIL"))
@@ -793,20 +793,20 @@ public abstract class NewBookEditScreenMixin extends Screen {
         currentPage = MathHelper.clamp(currentPage, -1, display_pages.size() - 1);
 
         /*? if <1.21.6 {*/
-        /*doneButton.active = ((PageContentAccessor) this.getPageContent()).getLines().length <= 14;
+        doneButton.active = ((PageContentAccessor) this.getPageContent()).getLines().length <= 14;
         signButton.active = ((PageContentAccessor) this.getPageContent()).getLines().length <= 14;
-        *//*?}*/
+        /*?}*/
 
         if (error != null) {
             context.drawCenteredTextWithShadow(client.textRenderer, error, width / 2, height - 20, VersionFunctions.ColorHelper.getArgb(255, 255, 100, 100));
         }
         boolean editing = currentEdited != -1;
         //? if >= 1.21.6
-        boolean inSigningScreen = client.currentScreen instanceof BookSigningScreen;
-        if (/*? if <1.21.6 {*//*signing*//*?} else {*/ inSigningScreen /*?}*/) {
+        /*boolean inSigningScreen = client.currentScreen instanceof BookSigningScreen;*/
+        if (/*? if <1.21.6 {*/signing/*?} else {*/ /*inSigningScreen *//*?}*/) {
             editing = false;
         }
-        addButton.visible = /*? if <1.21.6 {*//*!signing*//*?} else {*/ !inSigningScreen /*?}*/;
+        addButton.visible = /*? if <1.21.6 {*/!signing/*?} else {*/ /*!inSigningScreen *//*?}*/;
         removeButton.visible = editing;
         urlField.setVisible(editing);
         xPosField.setVisible(editing);
@@ -821,7 +821,7 @@ public abstract class NewBookEditScreenMixin extends Screen {
         spinField.setVisible(editing);
         spinButton.visible = editing;
 
-        if (/*? if <1.21.6 {*//*signing*//*?} else {*/ inSigningScreen /*?}*/) {
+        if (/*? if <1.21.6 {*/signing/*?} else {*/ /*inSigningScreen *//*?}*/) {
             return;
         }
         int bookX = this.width / 2 - 96;
@@ -831,16 +831,16 @@ public abstract class NewBookEditScreenMixin extends Screen {
         combined.addAll(display_pages.get(currentPage));
         for (ImageData imageData : VersionFunctions.reversed(combined)) {
             //? if < 1.21.5 {
-            /*RenderSystem.disableCull();
+            RenderSystem.disableCull();
             RenderSystem.enableBlend();
-            *///?}
+            //?}
 
             imageData.renderImage(context, bookX, bookY);
 
             //? if < 1.21.5 {
-            /*RenderSystem.disableBlend();
+            RenderSystem.disableBlend();
             RenderSystem.enableCull();
-            *///?}
+            //?}
         }
 
         var images = (display_pages.get(currentPage));
@@ -853,7 +853,7 @@ public abstract class NewBookEditScreenMixin extends Screen {
             }
         }
 
-        List.of(urlField, addButton, removeButton, widthButton, widthField, heightButton, heightField, xPosButton, xPosField, yPosButton, yPosField, nextPageButton, previousPageButton, /*? if <1.21.6 {*//*signButton, doneButton,*//*?}*/spinButton, spinField).forEach(e -> e.render(context, mouseX, mouseY, delta));
+        List.of(urlField, addButton, removeButton, widthButton, widthField, heightButton, heightField, xPosButton, xPosField, yPosButton, yPosField, nextPageButton, previousPageButton, /*? if <1.21.6 {*/signButton, doneButton,/*?}*/spinButton, spinField).forEach(e -> e.render(context, mouseX, mouseY, delta));
 
         int i = (this.width - 192) / 2;
         int j = 2;
@@ -861,7 +861,7 @@ public abstract class NewBookEditScreenMixin extends Screen {
         context.drawText(this.textRenderer, this.pageIndicatorText, i - n + 192 - 44, 18, 0x3F000000, false);
 
         /*? if <1.21.6 {*/
-        /*for (var line : ((PageContentAccessor) this.getPageContent()).getLines()) {
+        for (var line : ((PageContentAccessor) this.getPageContent()).getLines()) {
             context.drawText(this.textRenderer, ((LineAccessor) line).getText(), ((LineAccessor) line).getX(), ((LineAccessor) line).getY(), 0x3F000000, false);
         }
 
@@ -871,8 +871,8 @@ public abstract class NewBookEditScreenMixin extends Screen {
         if (((PageContentAccessor) this.getPageContent()).getLines().length > 14) {
             context.drawCenteredTextWithShadow(client.textRenderer, Text.translatable("imaginebook.error.too_much_lines"), width / 2, 222, VersionFunctions.ColorHelper.getArgb(255, 255, 100, 100));
         }
-        *///?} else {
-        int contentAreaX = (this.width - BookEditScreen.MAX_TEXT_WIDTH) / 2 - 4;
+        //?} else {
+        /*int contentAreaX = (this.width - BookEditScreen.MAX_TEXT_WIDTH) / 2 - 4;
         int contentAreaY = 32;
 
         List<OrderedText> wrappedLines = this.textRenderer.wrapLines(StringVisitable.plain(getCurrentPageContent()), BookEditScreen.MAX_TEXT_WIDTH);
@@ -887,7 +887,7 @@ public abstract class NewBookEditScreenMixin extends Screen {
 
             currentLineY += lineHeight;
         }
-        //?}
+        *///?}
     }
 
 
@@ -897,12 +897,12 @@ public abstract class NewBookEditScreenMixin extends Screen {
 
 
     @Inject(method = "finalizeBook", at = @At("HEAD"), cancellable = true)
-    void finalizeBook( /*? if <1.21.6 {*//*boolean sign,*//*?}*/ CallbackInfo ci) {
+    void finalizeBook( /*? if <1.21.6 {*/boolean sign,/*?}*/ CallbackInfo ci) {
         /*? if <1.21.6 {*/
-        /*if (!this.dirty) {
+        if (!this.dirty) {
             this.dirty = true;
         }
-        *//*?}*/
+        /*?}*/
         if (Imaginebook.cancelledFinalize) {
             ci.cancel();
             return;

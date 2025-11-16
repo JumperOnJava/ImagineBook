@@ -56,15 +56,15 @@ public class BookScreenMixin extends Screen {
 
     void parseImages(BookScreen.Contents contents) {
         //? if >= 1.21.1
-        var pages = contents.pages();
+        /*var pages = contents.pages();*/
 
         //? if >= 1.21.1 {
-        for (int i = 0; i < pages.size(); i++) {
+        /*for (int i = 0; i < pages.size(); i++) {
             var page = pages.get(i).getString();
-            //?} else {
-        /*for (int i = 0; i < contents.getPageCount(); i++) {
+            *///?} else {
+        for (int i = 0; i < contents.getPageCount(); i++) {
             var page = contents.getPage(i).getString();
-            *///?}
+            //?}
 
 
             if (page.length() == Imaginebook.LENGTH) {
@@ -97,17 +97,17 @@ public class BookScreenMixin extends Screen {
         if (images == null) return;
         for (ImageData image : VersionFunctions.reversed(images)) {
             //? if < 1.21.5 {
-            /*RenderSystem.disableCull();
+            RenderSystem.disableCull();
             RenderSystem.enableBlend();
-            *///?} else {
+            //?} else {
             //?}
 
             image.renderImage(context, bookX, bookY);
 
             //? if < 1.21.5 {
-            /*RenderSystem.disableBlend();
+            RenderSystem.disableBlend();
             RenderSystem.enableCull();
-            *///?} else {
+            //?} else {
             //?}
         }
         previousPageButton.render(context, mouseX, mouseY, delta);

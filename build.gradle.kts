@@ -1,4 +1,5 @@
 import me.modmuss50.mpp.ReleaseType
+import org.gradle.kotlin.dsl.assign
 import java.util.*
 
 plugins {
@@ -28,6 +29,12 @@ repositories{
     maven("https://maven.terraformersmc.com/")
     //placeholder api (modmenu depencency)
     maven("https://maven.nucleoid.xyz/")
+}
+val accessWidenerFile = if (stonecutter.eval(minecraft, "<=1.21.5")) {
+    "imaginebook.old.accesswidener"
+}
+else{
+    "imaginebook.1.21.5.accesswidener"
 }
 dependencies {
     minecraft("com.mojang:minecraft:$minecraft")
@@ -70,9 +77,7 @@ dependencies {
 }
 
 loom {
-    if (stonecutter.eval(minecraft, "<=1.21.5")) {
-        accessWidenerPath = rootProject.file("src/main/resources/imaginebook.accesswidener")
-    }
+    accessWidenerPath = rootProject.file("src/main/resources/$accessWidenerFile");
 
     decompilers {
         get("vineflower").apply { // Adds names to lambdas - useful for mixins
@@ -153,6 +158,7 @@ tasks.remapJar {
     injectAccessWidener = true
     input = tasks.shadowJar.get().archiveFile
     archiveClassifier = null
+    atAccessWideners.add(accessWidenerFile)
     dependsOn(tasks.shadowJar)
 }
 

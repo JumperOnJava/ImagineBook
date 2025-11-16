@@ -15,6 +15,12 @@ import net.fabricmc.loader.api.FabricLoader;
 /*import net.minecraftforge.fml.loading.FMLPaths;
 *//*?}*/
 
+//? if >= 1.21.5 {
+/*import net.minecraft.client.gl.RenderPipelines;
+import com.mojang.blaze3d.pipeline.RenderPipeline;
+import static net.minecraft.client.gl.RenderPipelines.POSITION_TEX_COLOR_SNIPPET;
+*///?}
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,14 +30,20 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public final class Imaginebook {
     public static final String MOD_ID = "imaginebook";
     public static Logger LOGGER = LoggerFactory.getLogger("ImagineBook");
     public static final String TEST_BALLER = "https://i.kym-cdn.com/photos/images/original/002/461/188/20d.png";
 
+    //? if >=1.21.6 {
+    /*public static RenderPipeline GUI_TEXTURED_NOCULL;
+    *///?}
     public static void init() {
         createImagineBookFolder();
-
+        //? if >=1.21.6 {
+            /*Imaginebook.GUI_TEXTURED_NOCULL = RenderPipelines.register(RenderPipeline.builder(POSITION_TEX_COLOR_SNIPPET).withLocation("pipeline/imaginebook_gui_textured_nocull").withCull(false).build());
+        *///?}
     }
 
 

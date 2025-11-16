@@ -9,7 +9,10 @@ You can use https://imgur.com/ or some services to upload images
 
 You can add image even if you don't have mod installed using mod's image format: [url,x,y,width%,height%,rotation°]
 
+Some parts of mod use Access Wideners, at some point other dev started to use Accessors. I am lazy to port his code to AW, so use whatever you want
+
 ## Credits
 
-[Im]
+Riflusso for neoforge port and updating the mod 
+
 [Webp-ImageIO](https://github.com/sejda-pdf/webp-imageio) by Seija PDF 
