@@ -158,7 +158,9 @@ tasks.remapJar {
     injectAccessWidener = true
     input = tasks.shadowJar.get().archiveFile
     archiveClassifier = null
-    atAccessWideners.add(accessWidenerFile)
+    if(loader != "fabric"){
+        atAccessWideners.add(accessWidenerFile)
+    }
     dependsOn(tasks.shadowJar)
 }
 
